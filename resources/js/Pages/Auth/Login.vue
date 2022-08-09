@@ -81,6 +81,13 @@ const submit = () => {
                     Log in
                 </JetButton>
             </div>
+            <br>
+<hr>
+            <div class="flex items-center justify-center mt-4">
+                <a :href="route('loginWithTwitch')" class=" font-bold py-2 px-4 rounded bg-blue-500 text-white">
+                    Login with Twitch
+                </a>
+            </div>
         </form>
     </JetAuthenticationCard>
 </template>

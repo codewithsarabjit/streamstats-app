@@ -8,7 +8,7 @@ const props = defineProps(["user", "subscription"]);
                 Welcome {{props.user.name}}
             </div>
             <div class="mt-8">
-                Your Current subscription: {{props.subscription!==null ? props.subscription.name : ''}}
+                
             </div>
         </div>
     </div>

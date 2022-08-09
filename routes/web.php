@@ -25,6 +25,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/login/twitch', [HomeController::class, 'loginWithTwitch'])->name('loginWithTwitch');
+Route::get('/redirect/twitch', [HomeController::class, 'handleProviderCallback'])->name('handleProviderCallback');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
