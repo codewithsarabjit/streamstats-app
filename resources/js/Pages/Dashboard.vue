@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
-const props = defineProps(["user", "topGames"]);
+const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount"]);
 </script>
 
 <template>
@@ -15,22 +15,61 @@ const props = defineProps(["user", "topGames"]);
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="flex p-4">
+                        <div>
+                            <h2><strong>Median number of viewers for all streams:</strong> {{medianViewersOfAllStreams}}</h2>
+                        </div>
+                    </div>
                     <div class="flex">
                         <div class="p-4">
-                            <h2><strong>Top Games</strong></h2>
+                            <h2><strong>1. Total number of streams for each game</strong></h2>
                             <table class="border-collapse border border-slate-500">
                                 <thead>
                                     <tr>
-                                        <th class="border border-slate-600">Art</th>
-                                        <th class="border border-slate-600">ID</th>
-                                        <th class="border border-slate-600">Name</th>
+                                        <th class="border border-slate-600">Game</th>
+                                        <th class="border border-slate-600">Count</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="topGame in topGames" :key="topGame">
-                                        <td class=" p-2"><img :src="topGame.box_art_url.replace('{width}', '50').replace('{height}', '50')" width="50" height="50" alt=""></td>
-                                        <td class=" p-2">{{topGame.id}}</td>
-                                        <td class=" p-2">{{topGame.name}}</td>
+                                    <tr v-for="item in totalNumberOfStreamsPerGame" :key="item">
+                                        <td class=" p-2">{{item.game}}</td>
+                                        <td class=" p-2">{{item.streamsCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4">
+                            <h2><strong>2. Top games by viewer count for each game</strong></h2>
+                            <table class="border-collapse border border-slate-500">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-slate-600">Game</th>
+                                        <th class="border border-slate-600">Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in topGamesByViewersPerGame" :key="item">
+                                        <td class=" p-2">{{item.game}}</td>
+                                        <td class=" p-2">{{item.viewsCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="p-4">
+                            <h2><strong>3. List of top 100 streams by viewer count that can be sorted asc & desc</strong></h2>
+                            <table class="border-collapse border border-slate-500" style="display: block; max-height: 300px; overflow-y: scroll;">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-slate-600">Stream Title</th>
+                                        <th class="border border-slate-600">Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(item, iIndex) in top100StreamsByViewersCount" :key="iIndex">
+                                        <td class=" p-2">{{`${iIndex+1}. ${item.title}`}}</td>
+                                        <td class=" p-2">{{item.views}}</td>
                                     </tr>
                                 </tbody>
                             </table>

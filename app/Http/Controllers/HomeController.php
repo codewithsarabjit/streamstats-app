@@ -28,13 +28,18 @@ class HomeController extends Controller
 
     public function dashboard(Request $request) 
     {
-        $twitch = new Twitch;
-        $topStreams = StreamService::syncStreams();
-        $topGames = $twitch->getTopGames([]);
-        // dd($topGames->data());
+        // $topStreams = StreamService::syncStreams();
+        $totalNumberOfStreamsPerGame = StreamService::totalNumberOfStreamsPerGame();
+        $topGamesByViewersPerGame = StreamService::topGamesByViewersPerGame();
+        $medianViewersOfAllStreams = StreamService::medianViewersOfAllStreams();
+        $top100StreamsByViewersCount = StreamService::top100StreamsByViewersCount();
+        
         return Inertia::render('Dashboard', [
             'user' => auth()->user(),
-            'topGames' => $topGames->data(),
+            'totalNumberOfStreamsPerGame' => $totalNumberOfStreamsPerGame,
+            'topGamesByViewersPerGame' => $topGamesByViewersPerGame,
+            'medianViewersOfAllStreams' => $medianViewersOfAllStreams,
+            'top100StreamsByViewersCount' => $top100StreamsByViewersCount,
         ]);
     }
 }
