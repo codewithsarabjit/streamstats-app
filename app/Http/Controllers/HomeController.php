@@ -34,6 +34,7 @@ class HomeController extends Controller
         $medianViewersOfAllStreams = StreamService::medianViewersOfAllStreams();
         $top100StreamsByViewersCount = StreamService::top100StreamsByViewersCount();
         $totalNumberOfStreamsByStartTime = StreamService::totalNumberOfStreamsByStartTime();
+        $followedStreamsIntop1000 = StreamService::followedStreamsIntop1000();
         
         return Inertia::render('Dashboard', [
             'user' => auth()->user(),
@@ -42,6 +43,7 @@ class HomeController extends Controller
             'medianViewersOfAllStreams' => $medianViewersOfAllStreams,
             'top100StreamsByViewersCount' => $top100StreamsByViewersCount,
             'totalNumberOfStreamsByStartTime' => $totalNumberOfStreamsByStartTime,
+            'followedStreamsIntop1000' => $followedStreamsIntop1000,
         ]);
     }
 }

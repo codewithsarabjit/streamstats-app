@@ -61,9 +61,12 @@ class StreamService
         return Stream::where("started_at", '>', $lastHourTime)->get()->count();
     }
 
-    public static function followedSteamsIntop1000()
+    public static function followedStreamsIntop1000()
     {
-        
+        $twitch = new Twitch;
+        $loggedInUserFollowed = $twitch->getUsersFollows(['from_id' => auth()->user()->twitch_id]);
+        $followedUsers = array_column($loggedInUserFollowed->data(), "to_name");
+        return Stream::select("channel_name")->whereIn("channel_name", $followedUsers)->get();
     }
 
     public static function diffViewersUserFollowedAnd1000thStream()

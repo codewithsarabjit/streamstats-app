@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
-const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount", "totalNumberOfStreamsByStartTime"]);
+const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount", "totalNumberOfStreamsByStartTime", "followedStreamsIntop1000"]);
 </script>
 
 <template>
@@ -52,6 +52,21 @@ const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByVie
                                     <tr v-for="item in topGamesByViewersPerGame" :key="item">
                                         <td class=" p-2">{{item.game}}</td>
                                         <td class=" p-2">{{item.viewsCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4">
+                            <h2><strong>4. Which of the top 1000 streams is the logged in user following?</strong></h2>
+                            <table class="border-collapse border border-slate-500">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-slate-600">Channel name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in followedStreamsIntop1000" :key="item">
+                                        <td class=" p-2">{{item.channel_name}}</td>
                                     </tr>
                                 </tbody>
                             </table>
