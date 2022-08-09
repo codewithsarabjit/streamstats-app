@@ -57,7 +57,8 @@ class StreamService
 
     public static function totalNumberOfStreamsByStartTime()
     {
-        
+        $lastHourTime = date("Y-m-d H:00:00",time());
+        return Stream::where("started_at", '>', $lastHourTime)->get()->count();
     }
 
     public static function followedSteamsIntop1000()

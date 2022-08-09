@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Jetstream/Welcome.vue';
-const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount"]);
+const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount", "totalNumberOfStreamsByStartTime"]);
 </script>
 
 <template>
@@ -18,6 +18,7 @@ const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByVie
                     <div class="flex p-4">
                         <div>
                             <h2><strong>Median number of viewers for all streams:</strong> {{medianViewersOfAllStreams}}</h2>
+                            <h2><strong>Total number of streams by their start time(in last 1 hour):</strong> {{totalNumberOfStreamsByStartTime}}</h2>
                         </div>
                     </div>
                     <div class="flex">
