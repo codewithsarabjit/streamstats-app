@@ -71,7 +71,18 @@ class StreamService
 
     public static function diffViewersUserFollowedAnd1000thStream()
     {
+        $twitch = new Twitch;
+        $loggedInUserFollowed = $twitch->getUsersFollows(['from_id' => auth()->user()->twitch_id]);        
+        $followedUsersIds = array_column($loggedInUserFollowed->data(), "to_id");
         
+        $thousandthStreamViews = Stream::orderBy("views", "asc")->first();
+        $minViewsintop1000 = $thousandthStreamViews->views ?? 0;
+        
+        $followedStreams = $twitch->getStreams(['user_id' => $followedUsersIds]);
+        $followedStreamsCount = count($followedStreams->data());
+        $leastViewFollowed = (!empty($followedStreams->data()) && isset($followedStreams->data()[$followedStreamsCount-1])) ? $followedStreams->data()[$followedStreamsCount-1]->viewer_count : 0;
+        
+        return $leastViewFollowed < $minViewsintop1000 ? ($minViewsintop1000 - $leastViewFollowed)+1 : 0;
     }
 
     public static function sharedTagsUserFollowedAndTop1000Streams()
