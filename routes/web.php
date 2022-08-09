@@ -25,6 +25,9 @@ Route::get('/', function () {
     ]);
 });
 
+/**
+ * Below routes are responsible for authorizing a twitch user and call back from twitch.
+ */
 Route::get('/login/twitch', [HomeController::class, 'loginWithTwitch'])->name('loginWithTwitch');
 Route::get('/redirect/twitch', [HomeController::class, 'handleProviderCallback'])->name('handleProviderCallback');
 

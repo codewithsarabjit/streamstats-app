@@ -1,7 +1,11 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Jetstream/Welcome.vue';
-const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount", "totalNumberOfStreamsByStartTime", "followedStreamsIntop1000", "diffViewersUserFollowedAnd1000thStream"]);
+import TotalNumberOfStreamsPerGame from '@/Pages/TotalNumberOfStreamsPerGame.vue';
+import TopGamesByViewersPerGame from '@/Pages/TopGamesByViewersPerGame.vue';
+import Top100StreamsByViewersCount from '@/Pages/Top100StreamsByViewersCount.vue';
+import FollowedStreamsIntop1000 from '@/Pages/FollowedStreamsIntop1000.vue';
+import SharedTagsUserFollowedAndTop1000Streams from '@/Pages/SharedTagsUserFollowedAndTop1000Streams.vue';
+const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByViewersPerGame", "medianViewersOfAllStreams", "top100StreamsByViewersCount", "totalNumberOfStreamsByStartTime", "followedStreamsIntop1000", "diffViewersUserFollowedAnd1000thStream", "sharedTagsUserFollowedAndTop1000Streams"]);
 </script>
 
 <template>
@@ -15,82 +19,35 @@ const props = defineProps(["user", "totalNumberOfStreamsPerGame", "topGamesByVie
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="flex">
+                        <TotalNumberOfStreamsPerGame :records="totalNumberOfStreamsPerGame"></TotalNumberOfStreamsPerGame>
+                        <TopGamesByViewersPerGame :records="topGamesByViewersPerGame"></TopGamesByViewersPerGame>
+                    </div>
                     <div class="flex p-4">
                         <div>
-                            <h2><strong>Median number of viewers for all streams:</strong> {{medianViewersOfAllStreams}}</h2>
-                            <h2><strong>Total number of streams by their start time(in last 1 hour):</strong> {{totalNumberOfStreamsByStartTime}}</h2>
-                            <h2><strong>How many viewers does the lowest viewer count stream that the logged in user is following need to gain in order to make it into the top 1000?:</strong> {{diffViewersUserFollowedAnd1000thStream}}</h2>
+                            <h2><strong>3. Median number of viewers for all streams:</strong> {{medianViewersOfAllStreams}}</h2>
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="p-4">
-                            <h2><strong>1. Total number of streams for each game</strong></h2>
-                            <table class="border-collapse border border-slate-500">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-slate-600">Game</th>
-                                        <th class="border border-slate-600">Count</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in totalNumberOfStreamsPerGame" :key="item">
-                                        <td class=" p-2">{{item.game}}</td>
-                                        <td class=" p-2">{{item.streamsCount}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4">
-                            <h2><strong>2. Top games by viewer count for each game</strong></h2>
-                            <table class="border-collapse border border-slate-500">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-slate-600">Game</th>
-                                        <th class="border border-slate-600">Views</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in topGamesByViewersPerGame" :key="item">
-                                        <td class=" p-2">{{item.game}}</td>
-                                        <td class=" p-2">{{item.viewsCount}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4">
-                            <h2><strong>4. Which of the top 1000 streams is the logged in user following?</strong></h2>
-                            <table class="border-collapse border border-slate-500">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-slate-600">Channel name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in followedStreamsIntop1000" :key="item">
-                                        <td class=" p-2">{{item.channel_name}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <Top100StreamsByViewersCount :records="top100StreamsByViewersCount"></Top100StreamsByViewersCount>
+                    </div>
+                    
+                    <div class="flex p-4">
+                        <div>
+                            <h2><strong>5. Total number of streams by their start time(in last 1 hour):</strong> {{totalNumberOfStreamsByStartTime}}</h2>
                         </div>
                     </div>
                     <div class="flex">
-                        <div class="p-4">
-                            <h2><strong>3. List of top 100 streams by viewer count that can be sorted asc & desc</strong></h2>
-                            <table class="border-collapse border border-slate-500" style="display: block; max-height: 300px; overflow-y: scroll;">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-slate-600">Stream Title</th>
-                                        <th class="border border-slate-600">Views</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item, iIndex) in top100StreamsByViewersCount" :key="iIndex">
-                                        <td class=" p-2">{{`${iIndex+1}. ${item.title}`}}</td>
-                                        <td class=" p-2">{{item.views}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <FollowedStreamsIntop1000 :records="followedStreamsIntop1000"></FollowedStreamsIntop1000>
+                    </div>
+                    
+                    <div class="flex p-4">
+                        <div>
+                            <h2><strong>7. How many viewers does the lowest viewer count stream that the logged in user is following need to gain in order to make it into the top 1000?:</strong> {{diffViewersUserFollowedAnd1000thStream}}</h2>
                         </div>
+                    </div>
+                    <div class="flex p-4">
+                        <SharedTagsUserFollowedAndTop1000Streams :records="sharedTagsUserFollowedAndTop1000Streams"></SharedTagsUserFollowedAndTop1000Streams>
                     </div>
                 </div>
             </div>

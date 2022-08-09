@@ -14,11 +14,17 @@ use romanzipp\Twitch\Twitch;
 
 class HomeController extends Controller
 {
+    /**
+     * This function is responsible to redirect the user to twitch authorize page
+     */
     public function loginWithTwitch(Request $request) 
     {
         return Socialite::driver('twitch')->redirect();
     }
 
+    /**
+     * This function is responsible to save the authorized and valid twitch user into the users table, login the user, and redirect to the dashboard
+     */
     public function handleProviderCallback(Request $request) 
     {
         $user = UserService::saveTwitchUser(Socialite::driver('twitch')->user());
@@ -26,9 +32,11 @@ class HomeController extends Controller
         return Redirect::route('dashboard');
     }
 
-    public function dashboard(Request $request) 
+    /**
+     * This function is responsible to display all the required data on the dashboard of the loggedin user as per the requirement
+     */
+    public function dashboard() 
     {
-        // $topStreams = StreamService::syncStreams();
         $totalNumberOfStreamsPerGame = StreamService::totalNumberOfStreamsPerGame();
         $topGamesByViewersPerGame = StreamService::topGamesByViewersPerGame();
         $medianViewersOfAllStreams = StreamService::medianViewersOfAllStreams();
@@ -36,6 +44,7 @@ class HomeController extends Controller
         $totalNumberOfStreamsByStartTime = StreamService::totalNumberOfStreamsByStartTime();
         $followedStreamsIntop1000 = StreamService::followedStreamsIntop1000();
         $diffViewersUserFollowedAnd1000thStream = StreamService::diffViewersUserFollowedAnd1000thStream();
+        $sharedTagsUserFollowedAndTop1000Streams = StreamService::sharedTagsUserFollowedAndTop1000Streams();
         
         return Inertia::render('Dashboard', [
             'user' => auth()->user(),
@@ -46,6 +55,7 @@ class HomeController extends Controller
             'totalNumberOfStreamsByStartTime' => $totalNumberOfStreamsByStartTime,
             'followedStreamsIntop1000' => $followedStreamsIntop1000,
             'diffViewersUserFollowedAnd1000thStream' => $diffViewersUserFollowedAnd1000thStream,
+            'sharedTagsUserFollowedAndTop1000Streams' => $sharedTagsUserFollowedAndTop1000Streams,
         ]);
     }
 }

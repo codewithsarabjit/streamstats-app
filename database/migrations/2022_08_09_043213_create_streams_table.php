@@ -18,6 +18,7 @@ class CreateStreamsTable extends Migration
             $table->string('channel_name');
             $table->string('title');
             $table->string('game');
+            $table->longText('tag_ids');
             $table->integer('views');
             $table->timestamp('started_at')->nullable();
             $table->timestamps();

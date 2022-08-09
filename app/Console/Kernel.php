@@ -16,10 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        /**
+         * This function is responsible to call the syncStreams function from StreamService that will refresh the streams data every 15 minutes via cron.
+         */
         $schedule->call(function () {
             StreamService::syncStreams();
-        });//->everyFifteenMinutes()
+        })->everyFifteenMinutes();
     }
 
     /**
